@@ -1,18 +1,12 @@
 import { useEffect, useState } from "react";
-import { json, useNavigate, useParams } from "@remix-run/react";
+import { useNavigate, useParams } from "@remix-run/react";
 import api from "../api/axios";
 import { Product } from "~/routes/product-library";
 import { useCartStore } from "~/store/cart";
 import { IoArrowBack } from "react-icons/io5";
 import { trackEvent } from "~/utils/trackEvent";
 import { useUserStore } from "~/store/user";
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { requireAuth } from "~/utils/auth.server";
 
-export async function loader({ request }: LoaderFunctionArgs) {
-  await requireAuth(request);
-  return json({});
-}
 export default function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
