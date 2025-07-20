@@ -15,9 +15,6 @@ dist/
 # Go workspace file
 go.work
 
-# Go module files backup
-go.sum
-
 # Test binary
 *.test
 
