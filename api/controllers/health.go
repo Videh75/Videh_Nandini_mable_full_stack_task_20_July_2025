@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/videh75/mable-task-backend/database"
@@ -17,9 +18,9 @@ func HealthCheck(c *gin.Context) {
 		Status: "healthy",
 	})
 
-	s = append(s, services.CheckURLHealth("http://localhost:5173"))
+	s = append(s, services.CheckURLHealth(os.Getenv("FRONTEND_URL")))
 
-	s = append(s, services.CheckURLHealth("http://localhost:3000"))
+	s = append(s, services.CheckURLHealth(os.Getenv("GRAFANA_URL")))
 
 	s = append(s, services.CheckMongoHealth(database.Client))
 
