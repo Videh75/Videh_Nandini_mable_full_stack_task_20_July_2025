@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"crypto/tls"
 	"log"
 	"os"
 	"time"
@@ -20,6 +21,9 @@ func ConnectClickHouse() {
 			Database: os.Getenv("CLICKHOUSE_DB"),
 			Username: os.Getenv("CLICKHOUSE_USER"),
 			Password: os.Getenv("CLICKHOUSE_PASS"),
+		},
+		TLS: &tls.Config{
+			InsecureSkipVerify: false,
 		},
 		Compression: &clickhouse.Compression{
 			Method: clickhouse.CompressionLZ4,
