@@ -1,0 +1,60 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Output of go build
+/build/
+bin/
+dist/
+
+# Go workspace file
+go.work
+
+# Go module files backup
+go.sum
+
+# Test binary
+*.test
+
+# Vendor directory (if you use `go mod vendor`)
+/vendor/
+
+# IDE/editor folders
+.idea/
+.vscode/
+*.swp
+
+# Logs
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Coverage reports
+*.cover
+coverage.*
+
+# Temporary or backup files
+*~
+*.bak
+*.tmp
+*.orig
+
+# Database or ClickHouse dumps (optional)
+*.sql
+*.dump
+*.bak
+
+# MongoDB data directory (if local)
+data/
