@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "@remix-run/react";
+import { json, useNavigate, useParams } from "@remix-run/react";
 import api from "../api/axios";
 import { Product } from "~/routes/product-library";
 import { useCartStore } from "~/store/cart";
 import { IoArrowBack } from "react-icons/io5";
 import { trackEvent } from "~/utils/trackEvent";
 import { useUserStore } from "~/store/user";
+import { LoaderFunctionArgs } from "@remix-run/node";
+import { requireAuth } from "~/utils/auth.server";
 
+export async function loader({ request }: LoaderFunctionArgs) {
+  await requireAuth(request);
+  return json({});
+}
 export default function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const { cartItems, addToCart, updateQuantity } = useCartStore();
-  const email = useUserStore((state) => state.email);
-  const sessionId = useUserStore((state) => state.sessionId);
+  const email = useUserStore((state: any) => state.email);
+  const sessionId = useUserStore((state: any) => state.sessionId);
   const item = cartItems.find((p) => p.id === product?.id);
   const quantity = item?.quantity || 0;
 

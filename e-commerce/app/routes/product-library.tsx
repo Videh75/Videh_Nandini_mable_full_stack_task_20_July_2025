@@ -3,8 +3,10 @@ import api from "../api/axios";
 import { useUserStore } from "~/store/user";
 import ProductCard from "~/components/ProductCard";
 import { trackEvent } from "~/utils/trackEvent";
-import { useNavigate } from "@remix-run/react";
+import { json, useNavigate } from "@remix-run/react";
 import { useCartStore } from "~/store/cart";
+import { LoaderFunctionArgs } from "@remix-run/node";
+import { requireAuth } from "~/utils/auth.server";
 
 export type Product = {
   id: number;
@@ -14,11 +16,14 @@ export type Product = {
   images: string[];
   category: string;
 };
-
+export async function loader({ request }: LoaderFunctionArgs) {
+  await requireAuth(request);
+  return json({});
+}
 export default function ProductLibrary() {
   const [products, setProducts] = useState<Product[]>([]);
-  const email = useUserStore((state) => state.email);
-  const sessionId = useUserStore((state) => state.sessionId);
+  const email = useUserStore((state: any) => state.email);
+  const sessionId = useUserStore((state: any) => state.sessionId);
   const navigate = useNavigate();
   const { cartItems, getTotalCount } = useCartStore();
   const totalCount = getTotalCount();

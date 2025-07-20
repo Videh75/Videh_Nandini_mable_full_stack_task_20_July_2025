@@ -1,17 +1,23 @@
 import { useCartStore } from "~/store/cart";
-import { useNavigate } from "@remix-run/react";
+import { json, useNavigate } from "@remix-run/react";
 import { trackEvent } from "~/utils/trackEvent";
 import { useUserStore } from "~/store/user";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BsCreditCard } from "react-icons/bs";
+import { LoaderFunctionArgs } from "@remix-run/node";
+import { requireAuth } from "~/utils/auth.server";
 
+export async function loader({ request }: LoaderFunctionArgs) {
+  await requireAuth(request);
+  return json({});
+}
 export default function Cart() {
   const { cartItems, removeFromCart, updateQuantity, getTotalPrice } =
     useCartStore();
   const navigate = useNavigate();
   const totalPrice = getTotalPrice();
-  const email = useUserStore((state) => state.email);
-  const sessionId = useUserStore((state) => state.sessionId);
+  const email = useUserStore((state: any) => state.email);
+  const sessionId = useUserStore((state: any) => state.sessionId);
 
   const handlePayment = async () => {
     await trackEvent({

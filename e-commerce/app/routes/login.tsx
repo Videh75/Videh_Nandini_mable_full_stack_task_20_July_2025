@@ -6,8 +6,8 @@ import { trackEvent } from "~/utils/trackEvent";
 
 export default function Login() {
   const [error, setError] = useState("");
-  const setEmail = useUserStore((state) => state.setEmail);
-  const setSessionId = useUserStore((state) => state.setSessionId);
+  const setEmail = useUserStore((state: any) => state.setEmail);
+  const setSessionId = useUserStore((state: any) => state.setSessionId);
   const navigate = useNavigate();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {

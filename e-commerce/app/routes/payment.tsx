@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "@remix-run/react";
+import { json, useNavigate } from "@remix-run/react";
 import { toast } from "react-hot-toast";
 import { useCartStore } from "~/store/cart";
 import { trackEvent } from "~/utils/trackEvent";
 import { useUserStore } from "~/store/user";
 import { BsCreditCard2FrontFill, BsCashCoin } from "react-icons/bs";
 import { FaCcVisa, FaCcMastercard } from "react-icons/fa";
+import { LoaderFunctionArgs } from "@remix-run/node";
+import { requireAuth } from "~/utils/auth.server";
 
+export async function loader({ request }: LoaderFunctionArgs) {
+  await requireAuth(request);
+  return json({});
+}
 export default function Payment() {
   const navigate = useNavigate();
   const { cartItems, clearCart, getTotalPrice } = useCartStore();
   const totalPrice = getTotalPrice();
-  const email = useUserStore((state) => state.email);
-  const sessionId = useUserStore((state) => state.sessionId);
+  const email = useUserStore((state: any) => state.email);
+  const sessionId = useUserStore((state: any) => state.sessionId);
 
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
 

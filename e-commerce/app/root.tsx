@@ -12,7 +12,6 @@ import "./tailwind.css";
 import { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
 import Navbar from "./components/Navbar";
-import { checkAuth } from "./utils/checkAuth";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -50,9 +49,6 @@ export default function App() {
   const location = useLocation();
   const hideNavbarRoutes = ["/login", "/signup"];
   const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname);
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
   return (
     <>
       {shouldShowNavbar && <Navbar />}
